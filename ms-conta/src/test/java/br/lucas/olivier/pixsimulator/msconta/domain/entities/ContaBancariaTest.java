@@ -6,6 +6,8 @@ import br.lucas.olivier.pixsimulator.msconta.domain.exceptions.PixSimulatorExcep
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 public class ContaBancariaTest {
 
     @Test
@@ -65,6 +67,32 @@ public class ContaBancariaTest {
         contaBancaria.removeChavePix(chavePix);
 
         Assertions.assertTrue(contaBancaria.getChavesPix().isEmpty());
+    }
 
+    @Test
+    void deveCreditarSaldo() {
+        ContaBancaria contaBancaria = new ContaBancaria("1234", "56789", "0", TipoConta.CORRENTE);
+        contaBancaria.creditar(BigDecimal.TEN);
+
+        Assertions.assertEquals(BigDecimal.TEN, contaBancaria.getSaldo());
+    }
+
+    @Test
+    void deveDebitarSaldo() {
+        ContaBancaria contaBancaria = new ContaBancaria("1234", "56789", "0", TipoConta.CORRENTE);
+        contaBancaria.creditar(BigDecimal.TEN);
+        contaBancaria.debitar(BigDecimal.ONE);
+
+        Assertions.assertEquals(BigDecimal.valueOf(9), contaBancaria.getSaldo());
+    }
+
+    @Test
+    void naoDeveDebitarSaldoNegativo() {
+        ContaBancaria contaBancaria = new ContaBancaria("1234", "56789", "0", TipoConta.CORRENTE);
+        contaBancaria.creditar(BigDecimal.TEN);
+
+        Assertions.assertThrows(PixSimulatorException.class, () -> {
+            contaBancaria.debitar(BigDecimal.valueOf(11));
+        });
     }
 }
