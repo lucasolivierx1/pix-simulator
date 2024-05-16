@@ -2,10 +2,12 @@ package br.lucas.olivier.pixsimulator.msconta.domain.entities;
 
 import br.lucas.olivier.pixsimulator.msconta.domain.enums.TipoChave;
 import br.lucas.olivier.pixsimulator.msconta.domain.exceptions.PixSimulatorException;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.UUID;
 
-public record ChavePix(String chave, TipoChave tipoChave) {
+@Log4j2
+public record ChavePix(String chave, TipoChave tipoChave, String contaId) {
     public ChavePix {
         if (tipoChave == null) {
             throw new PixSimulatorException("Tipo de chave não pode ser nulo ou vazio");
@@ -35,6 +37,7 @@ public record ChavePix(String chave, TipoChave tipoChave) {
     }
 
     public static String gerarChavePixAleatoria() {
+        log.info("Gerando chave pix aleatória");
         return UUID.randomUUID().toString();
     }
 }

@@ -20,7 +20,7 @@ public class ContaBancariaTest {
     @Test
     void deveAdicionarChavePixValida() {
         ContaBancaria contaBancaria = new ContaBancaria("1234", "56789", "0", TipoConta.CORRENTE);
-        ChavePix chavePix = new ChavePix("12345678909", TipoChave.CPF);
+        ChavePix chavePix = new ChavePix("12345678909", TipoChave.CPF, "1");
 
         Assertions.assertDoesNotThrow(() -> {
             contaBancaria.addChavePix(chavePix);
@@ -30,8 +30,8 @@ public class ContaBancariaTest {
     @Test
     void naoDeveAdicionar2OuMaisChavesPixCPF() {
         ContaBancaria contaBancaria = new ContaBancaria("1234", "56789", "0", TipoConta.CORRENTE);
-        ChavePix chavePix = new ChavePix("12345678909", TipoChave.CPF);
-        ChavePix chavePix2 = new ChavePix("98732111321", TipoChave.CPF);
+        ChavePix chavePix = new ChavePix("12345678909", TipoChave.CPF,"1");
+        ChavePix chavePix2 = new ChavePix("98732111321", TipoChave.CPF,"1");
 
         Assertions.assertThrows(PixSimulatorException.class, () -> {
             contaBancaria.addChavePix(chavePix);
@@ -51,7 +51,7 @@ public class ContaBancariaTest {
     @Test
     void deveRemoverChavePixValida() {
         ContaBancaria contaBancaria = new ContaBancaria("1234", "56789", "0", TipoConta.CORRENTE);
-        ChavePix chavePix = new ChavePix("12345678909", TipoChave.CPF);
+        ChavePix chavePix = new ChavePix("12345678909", TipoChave.CPF, "1");
         contaBancaria.addChavePix(chavePix);
 
         Assertions.assertDoesNotThrow(() -> {
@@ -62,7 +62,7 @@ public class ContaBancariaTest {
     @Test
     void naoDeveRemoverChavePixInexistente() {
         ContaBancaria contaBancaria = new ContaBancaria("1234", "56789", "0", TipoConta.CORRENTE);
-        ChavePix chavePix = new ChavePix("12345678909", TipoChave.CPF);
+        ChavePix chavePix = new ChavePix("12345678909", TipoChave.CPF,"1");
 
         contaBancaria.removeChavePix(chavePix);
 

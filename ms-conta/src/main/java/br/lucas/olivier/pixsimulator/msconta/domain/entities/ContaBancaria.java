@@ -4,14 +4,17 @@ import br.lucas.olivier.pixsimulator.msconta.domain.enums.TipoChave;
 import br.lucas.olivier.pixsimulator.msconta.domain.enums.TipoConta;
 import br.lucas.olivier.pixsimulator.msconta.domain.exceptions.PixSimulatorException;
 import br.lucas.olivier.pixsimulator.msconta.utils.GenerateIdUtils;
+import lombok.Data;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Log4j2
 @Getter
+@Data
 public class ContaBancaria {
 
     private final String id;
@@ -81,6 +84,7 @@ public class ContaBancaria {
     }
 
     public void debitar(BigDecimal valor) {
+        log.info("Debitando valor de {} da conta {}", valor, this);
         validaValor(valor);
 
         if (saldo.compareTo(valor) < 0) {
@@ -91,6 +95,7 @@ public class ContaBancaria {
     }
 
     public void creditar(BigDecimal valor) {
+        log.info("Creditando valor de {} na conta {}", valor, this);
         validaValor(valor);
         this.saldo = this.saldo.add(valor);
     }
