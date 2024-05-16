@@ -11,6 +11,6 @@ public class ContaBancariaWrapper {
 
     public static ContaBancaria toDomain(
             ContaBancariaJpaEntity contaBancariaJpaEntity) {
-        return new ContaBancaria(contaBancariaJpaEntity.id(), contaBancariaJpaEntity.agencia(), contaBancariaJpaEntity.numero(), contaBancariaJpaEntity.digito(), contaBancariaJpaEntity.tipoConta());
+        return new ContaBancaria(contaBancariaJpaEntity.getId(), contaBancariaJpaEntity.getAgencia(), contaBancariaJpaEntity.getNumero(), contaBancariaJpaEntity.getDigito(), contaBancariaJpaEntity.getTipoConta());
     }
 }

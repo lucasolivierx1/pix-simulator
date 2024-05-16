@@ -12,6 +12,7 @@ import br.lucas.olivier.pixsimulator.msconta.infra.controllers.wrapper.ChavePixD
 import br.lucas.olivier.pixsimulator.msconta.infra.controllers.wrapper.ContaBancariaDTOWrapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,6 +56,7 @@ public class ContaBancariaController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ContaBancariaResponseDTO cadastrarContaBancaria(@RequestBody ContaBancariaRequestDTO request) {
         log.info("POST > /api/conta > Cadastrando conta bancária");
         return Optional.ofNullable(cadastrarContaBancariaUseCase
@@ -64,10 +66,10 @@ public class ContaBancariaController {
                 .orElseThrow(() -> new PixSimulatorException("Erro ao cadastrar conta bancária"));
     }
 
-    @PutMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void adicionarChavePix(@RequestParam String idConta, @RequestBody ChavePixRequestDTO request) {
+    @PutMapping("/{idConta}/add-chave-pix")
+    public ResponseEntity adicionarChavePix(@PathVariable String idConta, @RequestBody ChavePixRequestDTO request) {
         log.info("PUT > /api/conta > Adicionando chave pix");
         adicionarChavePixUseCase.execute(idConta, request.chave(), request.tipoChave());
+        return ResponseEntity.noContent().build();
     }
 }

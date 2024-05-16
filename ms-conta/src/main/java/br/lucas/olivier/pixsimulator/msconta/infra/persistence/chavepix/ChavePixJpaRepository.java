@@ -11,8 +11,8 @@ import java.util.Optional;
 @Repository
 public interface ChavePixJpaRepository extends JpaRepository<ChavePixJpaEntity, String> {
     @Query("SELECT c FROM ChavePixJpaEntity c WHERE c.chave = :chave")
-    Optional<ChavePix> findByChave(String chave);
+    Optional<ChavePixJpaEntity> findByChave(String chave);
 
     @Query("SELECT c FROM ChavePixJpaEntity c WHERE c.contaBancariaId = :contaId")
-    List<ChavePix> findAllByContaBancariaId(String contaId);
+    List<ChavePixJpaEntity> findAllByContaBancariaId(String contaId);
 }

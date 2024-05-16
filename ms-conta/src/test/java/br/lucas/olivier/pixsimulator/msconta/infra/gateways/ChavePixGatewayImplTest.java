@@ -30,7 +30,7 @@ public class ChavePixGatewayImplTest {
     void deveRetornarChavePixPorId() {
         ChavePix chavePix = new ChavePix("12345678909", TipoChave.CPF, "1");
         Mockito.when(chavePixJpaRepository.findByChave(anyString()))
-                .thenReturn(Optional.of(chavePix));
+                .thenReturn(Optional.of(ChavePixWrapper.toJpaEntity(chavePix)));
 
         Optional<ChavePix> result = chavePixGatewayImpl.findByChave("1");
 
@@ -56,7 +56,7 @@ public class ChavePixGatewayImplTest {
         List<ChavePix> chavesPix = Arrays.asList(chavePix1, chavePix2);
 
         Mockito.when(chavePixJpaRepository.findAllByContaBancariaId(anyString()))
-                .thenReturn(List.of(chavePix1, chavePix2));
+                .thenReturn(List.of(ChavePixWrapper.toJpaEntity(chavePix1), ChavePixWrapper.toJpaEntity(chavePix2)));
 
         List<ChavePix> result = chavePixGatewayImpl.findAllByContaBancariaId("1");
 

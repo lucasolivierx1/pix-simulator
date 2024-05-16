@@ -18,12 +18,16 @@ public class ChavePixGatewayImpl implements ChavePixGateway {
 
     @Override
     public Optional<ChavePix> findByChave(String chave) {
-        return chavePixJpaRepository.findByChave(chave);
+        return chavePixJpaRepository.findByChave(chave)
+                .map(ChavePixWrapper::toDomain);
     }
 
     @Override
     public List<ChavePix> findAllByContaBancariaId(String contaId) {
-        return chavePixJpaRepository.findAllByContaBancariaId(contaId);
+        return chavePixJpaRepository.findAllByContaBancariaId(contaId)
+                .stream()
+                .map(ChavePixWrapper::toDomain)
+                .toList();
     }
 
     @Override

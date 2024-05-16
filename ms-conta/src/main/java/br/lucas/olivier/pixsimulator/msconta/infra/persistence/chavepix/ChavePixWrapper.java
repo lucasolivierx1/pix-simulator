@@ -9,6 +9,6 @@ public class ChavePixWrapper {
     }
 
     public static ChavePix toDomain(ChavePixJpaEntity chavePixJpaEntity) {
-        return new ChavePix(chavePixJpaEntity.chave(), chavePixJpaEntity.tipoChave(), chavePixJpaEntity.contaBancariaId());
+        return new ChavePix(chavePixJpaEntity.getChave(), chavePixJpaEntity.getTipoChave(), chavePixJpaEntity.getContaBancariaId());
     }
 }
