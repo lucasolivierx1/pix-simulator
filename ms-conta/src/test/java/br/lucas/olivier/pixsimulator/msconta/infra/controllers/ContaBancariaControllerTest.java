@@ -88,7 +88,6 @@ public class ContaBancariaControllerTest {
                 .andExpect(jsonPath("$[0].digito").value(contaBancariaResponseDTO.digito()))
                 .andExpect(jsonPath("$[0].tipoConta").value(contaBancariaResponseDTO.tipoConta().name()))
                 .andExpect(jsonPath("$[0].chavesPix[0].chave").value(request.chave()));
-
     }
 
 

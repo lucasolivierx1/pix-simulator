@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: ms-conta
+  datasource:
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/ms-conta-db
+    username: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+  kafka:
+    bootstrap-servers: localhost:9092
+    properties:
+      request.timeout.ms: 20000
+      retry.backoff.ms: 500
+      schema.registry.url: http://localhost:8081
+      specific:
+        avro:
+          reader: true
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+    template:
+      default-topic:
+server:
+  port: 9595

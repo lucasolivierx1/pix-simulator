@@ -21,7 +21,6 @@
 
     <modules>
         <module>ms-extrato</module>
-        <module>ms-transacao</module>
         <module>ms-conta</module>
     </modules>
 
