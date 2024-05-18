@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: ms-extrato
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKER:localhost:9092}
+    consumer:
+      group-id: pix-simulator-extrato
+      auto-offset-reset: earliest
+    topics:
+      movimentacao : pix.simulator.conta.movimentacao.topic
+  data:
+    mongodb:
+      database: admin
+      uri: ${MONGO_DB_URL:mongodb://root:root@localhost:27017}

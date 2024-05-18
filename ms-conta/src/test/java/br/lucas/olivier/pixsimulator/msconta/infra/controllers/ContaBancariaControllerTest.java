@@ -6,8 +6,10 @@ import br.lucas.olivier.pixsimulator.msconta.domain.enums.TipoConta;
 import br.lucas.olivier.pixsimulator.msconta.infra.controllers.dtos.ChavePixRequestDTO;
 import br.lucas.olivier.pixsimulator.msconta.infra.controllers.dtos.ContaBancariaRequestDTO;
 import br.lucas.olivier.pixsimulator.msconta.infra.controllers.dtos.ContaBancariaResponseDTO;
+import br.lucas.olivier.pixsimulator.msconta.infra.controllers.dtos.DepositoRequestDTO;
 import br.lucas.olivier.pixsimulator.msconta.infra.controllers.wrapper.ContaBancariaDTOWrapper;
 import br.lucas.olivier.pixsimulator.msconta.infra.persistence.contabancaria.ContaBancariaWrapper;
+import br.lucas.olivier.pixsimulator.msconta.utils.JsonUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+
+import java.math.BigDecimal;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -72,7 +76,7 @@ public class ContaBancariaControllerTest {
     @Test
     @Order(3)
     void deveAdicionarChavePix() throws Exception {
-        ChavePixRequestDTO request = new ChavePixRequestDTO(contaBancariaResponseDTO.id(), TipoChave.CPF, "12345678910");
+        ChavePixRequestDTO request = new ChavePixRequestDTO(TipoChave.CPF, "12345678910");
 
         mockMvc.perform(put(String.format("/api/conta/%s/add-chave-pix",  contaBancariaResponseDTO.id()))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -88,6 +92,27 @@ public class ContaBancariaControllerTest {
                 .andExpect(jsonPath("$[0].digito").value(contaBancariaResponseDTO.digito()))
                 .andExpect(jsonPath("$[0].tipoConta").value(contaBancariaResponseDTO.tipoConta().name()))
                 .andExpect(jsonPath("$[0].chavesPix[0].chave").value(request.chave()));
+    }
+
+    @Test
+    @Order(4)
+    void deveDepositarNaConta() throws Exception {
+
+        DepositoRequestDTO request = new DepositoRequestDTO(new BigDecimal(100));
+
+        mockMvc.perform(put(String.format("/api/conta/%s/deposito", contaBancariaResponseDTO.id()))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonUtils.toJson(request)))
+                .andExpect(status().isNoContent());
+
+        mockMvc.perform(get("/api/conta")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(contaBancariaResponseDTO.id()))
+                .andExpect(jsonPath("$[0].agencia").value(contaBancariaResponseDTO.agencia()))
+                .andExpect(jsonPath("$[0].numero").value(contaBancariaResponseDTO.numero()))
+                .andExpect(jsonPath("$[0].digito").value(contaBancariaResponseDTO.digito()))
+                .andExpect(jsonPath("$[0].tipoConta").value(contaBancariaResponseDTO.tipoConta().name()));
     }
 
 

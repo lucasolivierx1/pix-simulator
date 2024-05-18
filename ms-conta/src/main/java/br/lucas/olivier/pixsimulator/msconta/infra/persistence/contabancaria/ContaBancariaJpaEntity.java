@@ -4,6 +4,8 @@ import br.lucas.olivier.pixsimulator.msconta.domain.enums.TipoConta;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "conta_bancaria")
 @Data
@@ -12,7 +14,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContaBancariaJpaEntity {
-
     @Id
     String id;
     String agencia;
@@ -20,6 +21,5 @@ public class ContaBancariaJpaEntity {
     String digito;
     @Enumerated(EnumType.STRING)
     TipoConta tipoConta;
-
-
+    BigDecimal saldo;
 }

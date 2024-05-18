@@ -53,7 +53,7 @@ public class TransferenciaPixUseCase {
                 LocalDateTime.now(), valor, TipoMovimentoEnum.DEBITO);
 
         contaBancariaGateway.save(destino);
-        var movimentacaoContaCreditoDTO = new MovimentacaoContaDTO(origem.getId(),
+        var movimentacaoContaCreditoDTO = new MovimentacaoContaDTO(destino.getId(),
                 destino.getAgencia(),
                 destino.getNumero(),
                 "Transferência PIX", LocalDateTime.now(), valor, TipoMovimentoEnum.CREDITO);

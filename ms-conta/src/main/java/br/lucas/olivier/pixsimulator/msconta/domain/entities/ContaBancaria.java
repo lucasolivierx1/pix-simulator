@@ -34,6 +34,17 @@ public class ContaBancaria {
         this.validate();
     }
 
+    public ContaBancaria(String id, String agencia, String numero, String digito, TipoConta tipoConta, BigDecimal saldo) {
+        this.id = id;
+        this.agencia = agencia;
+        this.numero = numero;
+        this.digito = digito;
+        this.tipoConta = tipoConta;
+        this.chavesPix = new ArrayList<>();
+        this.saldo = saldo;
+        this.validate();
+    }
+
     public ContaBancaria(String agencia, String numero, String digito, TipoConta tipoConta) {
         this(GenerateIdUtils.generateUUID(), agencia, numero, digito, tipoConta);
     }

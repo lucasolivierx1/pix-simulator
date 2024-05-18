@@ -55,4 +55,10 @@ public class MsContaMain {
         return new TransferenciaPixUseCase(chavePixGateway, contaBancariaGateway, kafkaProducer);
     }
 
+    @Bean
+    public DepositoUseCase depositoUseCase(ContaBancariaGateway contaBancariaGateway,
+                                           PixSimulatorKafkaProducer pixSimulatorKafkaProducer) {
+        return new DepositoUseCase(contaBancariaGateway, pixSimulatorKafkaProducer);
+    }
+
 }

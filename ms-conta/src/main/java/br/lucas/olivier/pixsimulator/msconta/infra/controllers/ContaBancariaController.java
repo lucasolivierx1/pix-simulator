@@ -1,13 +1,11 @@
 package br.lucas.olivier.pixsimulator.msconta.infra.controllers;
 
-import br.lucas.olivier.pixsimulator.msconta.application.usecases.AdicionarChavePixUseCase;
-import br.lucas.olivier.pixsimulator.msconta.application.usecases.BuscaChavesPixUseCase;
-import br.lucas.olivier.pixsimulator.msconta.application.usecases.BuscaContasBancariasUseCase;
-import br.lucas.olivier.pixsimulator.msconta.application.usecases.CadastrarContaBancariaUseCase;
+import br.lucas.olivier.pixsimulator.msconta.application.usecases.*;
 import br.lucas.olivier.pixsimulator.msconta.domain.exceptions.PixSimulatorException;
 import br.lucas.olivier.pixsimulator.msconta.infra.controllers.dtos.ChavePixRequestDTO;
 import br.lucas.olivier.pixsimulator.msconta.infra.controllers.dtos.ContaBancariaRequestDTO;
 import br.lucas.olivier.pixsimulator.msconta.infra.controllers.dtos.ContaBancariaResponseDTO;
+import br.lucas.olivier.pixsimulator.msconta.infra.controllers.dtos.DepositoRequestDTO;
 import br.lucas.olivier.pixsimulator.msconta.infra.controllers.wrapper.ChavePixDTOWrapper;
 import br.lucas.olivier.pixsimulator.msconta.infra.controllers.wrapper.ContaBancariaDTOWrapper;
 import lombok.extern.log4j.Log4j2;
@@ -28,15 +26,18 @@ public class ContaBancariaController {
     private final AdicionarChavePixUseCase adicionarChavePixUseCase;
     private final BuscaContasBancariasUseCase buscaContasBancariasUseCase;
     private final BuscaChavesPixUseCase buscaChavesPixUseCase;
+    private final DepositoUseCase depositoUseCase;
 
     public ContaBancariaController(final CadastrarContaBancariaUseCase cadastrarContaBancariaUseCase,
                                    final AdicionarChavePixUseCase adicionarChavePixUseCase,
                                    final BuscaContasBancariasUseCase buscaContasBancariasUseCase,
-                                   final BuscaChavesPixUseCase buscaChavesPixUseCase) {
+                                   final BuscaChavesPixUseCase buscaChavesPixUseCase,
+                                   final DepositoUseCase depositoUseCase) {
         this.cadastrarContaBancariaUseCase = cadastrarContaBancariaUseCase;
         this.adicionarChavePixUseCase = adicionarChavePixUseCase;
         this.buscaContasBancariasUseCase = buscaContasBancariasUseCase;
         this.buscaChavesPixUseCase = buscaChavesPixUseCase;
+        this.depositoUseCase = depositoUseCase;
     }
 
     @GetMapping
@@ -72,4 +73,13 @@ public class ContaBancariaController {
         adicionarChavePixUseCase.execute(idConta, request.chave(), request.tipoChave());
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{idConta}/deposito")
+    public ResponseEntity deposito(@PathVariable String idConta,
+                                   @RequestBody DepositoRequestDTO request) {
+        log.info("PUT > /api/conta > Realizando depósito");
+        depositoUseCase.execute(idConta, request.valor());
+        return ResponseEntity.noContent().build();
+    }
+
 }
