@@ -1,12 +1,14 @@
 package br.lucas.olivier.pixsimulator.msconta.infra.config;
 
 import br.lucas.olivier.pixsimulator.msconta.application.enums.TopicsEnum;
+import lombok.extern.log4j.Log4j2;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -15,7 +17,9 @@ import org.springframework.kafka.core.ProducerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+@EnableKafka
 @Configuration
+@Log4j2
 public class KafkaConfig {
 
     public static final int REPLICA_COUNT = 1;
@@ -26,6 +30,7 @@ public class KafkaConfig {
 
     @Bean
     public ProducerFactory<String, String> producerFactory() {
+        log.warn("Kafka Boostrap: {}", bootstrapAddress);
         return new DefaultKafkaProducerFactory<>(KafkaProducerConfig
                 .producerConfig(bootstrapAddress));
     }

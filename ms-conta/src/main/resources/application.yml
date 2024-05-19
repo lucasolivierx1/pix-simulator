@@ -10,7 +10,5 @@ spring:
       ddl-auto: update
   kafka:
     bootstrap-servers: ${KAFKA_BROKER:localhost:9092}
-    template:
-      default-topic:
 server:
-  port: 9595
+  port: 8080

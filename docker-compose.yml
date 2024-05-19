@@ -34,7 +34,7 @@ services:
       - pix-simulator-network
     environment:
       KAFKA_LISTENERS: "INTERNAL://:29092,EXTERNAL://:9092"
-      KAFKA_ADVERTISED_LISTENERS: "INTERNAL://kafka:29092,EXTERNAL://localhost:9092"
+      KAFKA_ADVERTISED_LISTENERS: "INTERNAL://kafka:29092,EXTERNAL://kafka:9092"
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT"
       KAFKA_INTER_BROKER_LISTENER_NAME: "INTERNAL"
       KAFKA_ZOOKEEPER_SESSION_TIMEOUT: "6000"
@@ -62,6 +62,35 @@ services:
     depends_on:
       - "kafka"
 
+  #Aplicações
+  ms-conta:
+    build: './ms-conta'
+    container_name: ms-conta
+    depends_on:
+      - kafka
+      - ms-conta-db
+    networks:
+      - pix-simulator-network
+    environment:
+     - POSTGRES_USER=postgres
+     - POSTGRES_PASSWORD=postgres
+     - POSTGRES_DB_URL=jdbc:postgresql://ms-conta-db:5432/ms-conta-db
+     - KAFKA_BROKER=kafka:9092
+    ports:
+    - "8090:8080"
+
+  ms-extrato:
+    build: './ms-extrato'
+    container_name: ms-extrato
+    depends_on:
+      - kafka
+      - ms-extrato-db
+    networks:
+      - pix-simulator-network
+    environment:
+      - KAFKA_BROKER=kafka:29092
+      - MONGO_DB_URL=mongodb://root:root@ms-extrato-db:27017/ms-extrato-db?authSource=admin
+    ports:
+    - "8091:8080"
 networks:
   pix-simulator-network:
-    driver: bridge
