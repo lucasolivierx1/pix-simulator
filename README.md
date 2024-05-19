@@ -53,11 +53,16 @@ Na raiz do projeto existe uma collection do Postman com todos os endpoints dispo
 Para *fins didáticos* não foi implementada a segurança dos endpoints.
 
 ### ms-conta
+
+SWAGGER > http://localhost:8090/swagger-ui/index.html
+
 - `POST /api/conta`: Cria uma nova conta.
 - `GET /api/conta/{idConta}`: Retorna as informações da conta com o ID especificado.
 - `PUT /api/conta/{idConta}/add-chave-pix`: Adiciona chave pix na conta com o ID especificado.
 
 
 ### ms-extrato
+
+SWAGGER > http://localhost:8091/swagger-ui/index.html
 
 - `GET /api/extrato/{idConta}`: Retorna o extrato da conta com o ID especificado.
