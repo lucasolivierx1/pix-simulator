@@ -1,6 +1,6 @@
-# Simulador Pix
+# Simulador Pix (Prova de Conceito - PoC)~~~~
 
-Este projeto é uma simulação do sistema Pix, um método de pagamento popular no Brasil. Ele consiste em dois microserviços: `ms-conta` e `ms-extrato`.
+Este projeto é uma simulação do sistema Pix (PoC), um método de pagamento popular no Brasil. Ele consiste em dois microserviços: `ms-conta` e `ms-extrato`.
 
 ## Tecnologias Utilizadas
 
@@ -49,6 +49,8 @@ mvn test
 ## Endpoints
 
 Na raiz do projeto existe uma collection do Postman com todos os endpoints disponíveis. Você pode importá-la no Postman e testa-los.
+
+Para *fins didáticos* não foi implementada a segurança dos endpoints.
 
 ### ms-conta
 - `POST /api/conta`: Cria uma nova conta.
