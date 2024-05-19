@@ -36,8 +36,4 @@ public class ChavePixGatewayImpl implements ChavePixGateway {
                 .map(ChavePixWrapper::toDomain);
     }
 
-    @Override
-    public void delete(ChavePix chavePix) {
-        chavePixJpaRepository.delete(ChavePixWrapper.toJpaEntity(chavePix));
-    }
 }

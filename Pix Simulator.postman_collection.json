@@ -1,0 +1,208 @@
+{
+	"info": {
+		"_postman_id": "42d0a6df-4ddd-4d85-a599-e04c25689456",
+		"name": "Pix Simulator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11306845"
+	},
+	"item": [
+		{
+			"name": "conta-bancaria",
+			"item": [
+				{
+					"name": "Lista Contas Bancárias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_CONTA}}/api/conta",
+							"host": [
+								"{{HOST_CONTA}}"
+							],
+							"path": [
+								"api",
+								"conta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cadastrar conta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"agencia\": \"0001\",\r\n    \"numero\": \"123456\",\r\n    \"digito\": \"1\",\r\n    \"tipoConta\": \"CORRENTE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_CONTA}}/api/conta",
+							"host": [
+								"{{HOST_CONTA}}"
+							],
+							"path": [
+								"api",
+								"conta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Chave Pix",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tipoChave\": \"EMAIL\",\r\n    \"chave\": \"teste@teste.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_CONTA}}/api/conta/84a94b66-a19a-44f7-9dba-161eca64756a/add-chave-pix",
+							"host": [
+								"{{HOST_CONTA}}"
+							],
+							"path": [
+								"api",
+								"conta",
+								"84a94b66-a19a-44f7-9dba-161eca64756a",
+								"add-chave-pix"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deposito",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"valor\": 100.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_CONTA}}/api/conta/1ac9aef2-ae38-4e17-a922-48d4b7ebc2f5/deposito",
+							"host": [
+								"{{HOST_CONTA}}"
+							],
+							"path": [
+								"api",
+								"conta",
+								"1ac9aef2-ae38-4e17-a922-48d4b7ebc2f5",
+								"deposito"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "transferencia",
+			"item": [
+				{
+					"name": "Transferencia PIX",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idContaOrigem\": \"ff5b3dbd-1406-4d64-930e-84a161bbf7ea\",\r\n    \"chavePix\": \"teste@teste.com\",\r\n    \"valor\": 100.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_CONTA}}/api/transferencia",
+							"host": [
+								"{{HOST_CONTA}}"
+							],
+							"path": [
+								"api",
+								"transferencia"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "extrato",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_EXTRATO}}/api/extrato/1ac9aef2-ae38-4e17-a922-48d4b7ebc2f5",
+							"host": [
+								"{{HOST_EXTRATO}}"
+							],
+							"path": [
+								"api",
+								"extrato",
+								"1ac9aef2-ae38-4e17-a922-48d4b7ebc2f5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HOST_CONTA",
+			"value": "http://localhost:8090",
+			"type": "string"
+		},
+		{
+			"key": "HOST_EXTRATO",
+			"value": "http://localhost:8091",
+			"type": "string"
+		}
+	]
+}

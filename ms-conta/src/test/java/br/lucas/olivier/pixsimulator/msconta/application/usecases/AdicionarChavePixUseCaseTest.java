@@ -43,6 +43,24 @@ public class AdicionarChavePixUseCaseTest {
     }
 
     @Test
+    void naoDeveAdicionarChavePixQuandoExistir(){
+        ContaBancaria contaBancaria = new ContaBancaria("1234", "56789", "0", TipoConta.CORRENTE);
+        ChavePix chavePix = new ChavePix("12345678909", TipoChave.CPF, "1");
+
+        Mockito.when(contaBancariaGateway.findById(Mockito.anyString()))
+                .thenReturn(Optional.of(contaBancaria));
+
+        Mockito.when(chavePixGateway.findByChave(Mockito.anyString()))
+                .thenReturn(Optional.of(chavePix));
+
+        AdicionarChavePixUseCase useCase = new AdicionarChavePixUseCase(chavePixGateway, contaBancariaGateway);
+
+        Assertions.assertThrows(PixSimulatorException.class, () -> {
+            useCase.execute("1", "12345678909", TipoChave.CPF);
+        }, "Deveria lançar exceção quando a chave pix já existe");
+    }
+
+    @Test
     void naoDeveAdicionarChavePixQuandoContaBancariaNaoExiste() {
 
         Mockito.when(contaBancariaGateway.findById(Mockito.anyString())).thenReturn(Optional.empty());

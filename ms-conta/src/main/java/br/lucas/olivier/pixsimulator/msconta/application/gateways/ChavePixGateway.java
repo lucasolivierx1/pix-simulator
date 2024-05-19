@@ -12,5 +12,4 @@ public interface ChavePixGateway {
 
     Optional<ChavePix> save(ChavePix chavePix);
 
-    void delete(ChavePix chavePix);
 }
